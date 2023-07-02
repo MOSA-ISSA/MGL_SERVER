@@ -10,6 +10,7 @@ const mongooseLink = "mongodb+srv://MOSA:ma741369@miuniverse.uqftmxz.mongodb.net
 mongoose.connect(mongooseLink);
 mongoose.connection.on("connected", () => {
   console.log("mongo connected");
+  console.log("MGL server start");
 });
 
 // console.log(A.results[0].name);
