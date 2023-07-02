@@ -1,7 +1,8 @@
 const express = require("express");
-const { checkRespond } = require("../controller/localControler");
-const localRout = express.Router();
+const GameDataController = require("../controller/GameDataController");
+const GameDataRouter = express.Router();
 
-localRout.get("/checkRespond",checkRespond)
+GameDataRouter.get("/getAllGames",GameDataController.getAllGames)
+GameDataRouter.get("/getGameByName",GameDataController.getGameByName)
 
-module.exports = localRout;
+module.exports = GameDataRouter;
