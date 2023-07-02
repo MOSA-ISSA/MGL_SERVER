@@ -12,19 +12,9 @@ mongoose.connection.on("connected", () => {
   console.log("mongo connected");
   console.log("MGL server start");
 });
+//  http://localhost:2999 //
 
-// console.log(A.results[0].name);
-// console.log(A.results.length);
 
-// const gameList =new GameListModule({GameData:"game"})
-// gameList.save().then(()=>{console.log('saved');})
-
-// for (let i = 0; i < A.results.length; i++) {
-//   const gameList =new GameListModule({GameData:A.results[i]})
-//   gameList.save().then(()=>{console.log('saved');})
-//   // const element = A.results[i].name;
-//   // console.log(element);
-// }
 
 
 app.get("/app", (req, res) => {
@@ -55,6 +45,19 @@ app.post("/test", (req, res) => {
     console.log(e.message);
   }
 })
+
+// console.log(A.results[0].name);
+// console.log(A.results.length);
+
+// const gameList =new GameListModule({GameData:"game"})
+// gameList.save().then(()=>{console.log('saved');})
+
+// for (let i = 0; i < A.results.length; i++) {
+//   const gameList =new GameListModule({GameData:A.results[i]})
+//   gameList.save().then(()=>{console.log('saved');})
+//   // const element = A.results[i].name;
+//   // console.log(element);
+// }
 
 app.use("/", Routs);
 
