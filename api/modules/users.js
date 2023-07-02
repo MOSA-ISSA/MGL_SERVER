@@ -28,15 +28,24 @@ const userSchema = new mongoose.Schema({
   },
   name:{
     type:String,
-    //required:true,
-    //minLength:1,
+    required:true,
+    minLength:1,
     maxLength:20,
   },
   createdAt:{
     type:Date,
     immutable:true,
     default:()=> Date.now()
-  }
+  },
+  list:{
+    played:[],
+    planToPlay:[],
+    playing:[],
+    trash:[],
+  },
+  image :{type:String,},
+  imageBackground :{type:String,},
+
 });
 
 const userModule = mongoose.model('Users', userSchema);
