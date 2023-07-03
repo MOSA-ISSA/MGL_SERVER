@@ -4,6 +4,6 @@ const UserRouter = express.Router();
 
 UserRouter.delete("/deleteUserByID",UserController.deleteUserByID)
 UserRouter.post("/creatNewUser",UserController.creatNewUser)
-UserRouter.get("/getUserByID",UserController.getUserByID)
+UserRouter.post("/getUserByID",UserController.getUserByID)
 
 module.exports = UserRouter;
