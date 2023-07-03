@@ -1,5 +1,4 @@
 const mongoose = require('mongoose');
-const { path } = require('../../App');
 
 const userSchema = new mongoose.Schema({
   ID:{
@@ -50,7 +49,6 @@ const userSchema = new mongoose.Schema({
   imageBackground: {
     type: String,
   },
-
 });
 
 const userModule = mongoose.model('Users', userSchema);

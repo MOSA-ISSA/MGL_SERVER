@@ -17,6 +17,7 @@ const getAllUsersID =async()=>{
     });
     return usersID
 }
+
 // getAllUsersID()
 const IsUserExist=async(userID)=>await getAllUsersID()
 .then((value) =>{
@@ -24,6 +25,15 @@ console.log(value);
 // console.log(value.includes(userID));
 return value.includes(userID)
 })
+
+const isUserExist=async(req, res)=>{
+  await getAllUsersID()
+  .then((value) =>{
+    // console.log(value);
+    // console.log(value.includes(req.body.ID)));
+    res.status(200).json({ message: value.includes(req.body.ID) });
+  })
+}
 
 //app.post("/creatNewUser", 
 const creatNewUser = async (req, res) => {
@@ -115,5 +125,5 @@ const getUserByID = async (req, res) => {
 
 
 
-module.exports={creatNewUser,deleteUserByID,getUserByID}
+module.exports={creatNewUser,deleteUserByID,getUserByID,isUserExist}
 // exports to UserRouts("../routs/UserRoute");
