@@ -1,5 +1,6 @@
 const mongoose = require('mongoose');
 const UserModule = require('../modules/users');
+const { json } = require('express');
 const User=UserModule;
 
 const getAllUsersID =async()=>{
@@ -90,5 +91,27 @@ const deleteUserByID =async(req, res)=>{
       }
 }
 
-module.exports={creatNewUser,deleteUserByID}
+const getUserByID = async (req, res) => {
+  const ID = req.body.ID;
+  console.log(req.body.ID);
+
+  try {
+    const user = await User.findOne({ ID });
+    if (!user) {
+      console.log("User not found");
+      return res.status(404).json({ message: "User not found" });
+    }
+
+    console.log("User found:", user);
+    res.status(200).json({ message: user });
+  } catch (error) {
+    console.error("Error:", error);
+    res.status(500).json({ message: error });
+  }
+};
+
+
+
+
+module.exports={creatNewUser,deleteUserByID,getUserByID}
 // exports to UserRouts("../routs/UserRoute");
