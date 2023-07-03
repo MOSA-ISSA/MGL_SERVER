@@ -1,4 +1,5 @@
 const mongoose = require('mongoose');
+const { path } = require('../../App');
 
 const userSchema = new mongoose.Schema({
   ID:{
@@ -43,8 +44,12 @@ const userSchema = new mongoose.Schema({
     playing:[],
     trash:[],
   },
-  image :{type:String,},
-  imageBackground :{type:String,},
+  image: {
+    type: String, 
+  },
+  imageBackground: {
+    type: String,
+  },
 
 });
 
