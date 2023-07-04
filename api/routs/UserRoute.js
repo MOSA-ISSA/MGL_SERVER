@@ -6,6 +6,7 @@ UserRouter.delete("/deleteUserByID",UserController.deleteUserByID)
 UserRouter.post("/creatNewUser",UserController.creatNewUser)
 UserRouter.post("/getUserByID",UserController.getUserByID)
 UserRouter.post("/isUserExist",UserController.isUserExist)
+UserRouter.put("/updateUserByID",UserController.updateUserByID)
 
 
 module.exports = UserRouter;

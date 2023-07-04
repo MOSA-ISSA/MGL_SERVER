@@ -1,6 +1,7 @@
 const mongoose = require('mongoose');
 const UserModule = require('../modules/users');
 const { json } = require('express');
+const { validtion } = require('../validtion/validtion');
 const User=UserModule;
 
 const getAllUsersID =async()=>{
@@ -18,7 +19,56 @@ const getAllUsersID =async()=>{
     return usersID
 }
 
-// getAllUsersID()
+const uservalidation=(user)=>{
+  let validtions=validtion(user)
+  const values = Object.values(validtions);
+  for (const v of values) {
+    if (v !== "Valid") {
+      return v;
+    }
+  }
+  return "Valid";
+}
+// console.log(uservalidation(
+//     {
+//       ID:"mosa",
+//       mail:"m@m.mm",
+//       password:"123123123",
+//       name:"m"
+//   }
+// ));
+
+const updateUserByID = async (req, res) => {
+  try {
+    const updatedUserData = req.body.updatedUser;
+    const userID = req.body.userID
+    let validation = uservalidation(updatedUserData);
+    // console.log(validation);
+    if (validation === 'Valid') {
+      const canUpdate= await IsUserExist(req.body.userID,).then((v)=>!v)
+      // console.log(canUpdate);
+        if (canUpdate||userID===updatedUserData.ID) {
+          const updatedUser = await UserModule.updateOne(
+            { ID: userID },
+            { $set: updatedUserData },
+            { new: true }
+          );
+          if (!updatedUser) {
+            return res.status(404).json({ message: "User not found" });
+          }
+          return res.status(200).json({ message: "User updated successfully", user: updatedUser });
+        }else {
+          return res.status(400).json({ message: "User cannot be updated", validation:'Another user with this ID already exists'});
+        }
+      }
+    else {
+      return res.status(400).json({ message: "User cannot be updated", validation });
+    }
+  } catch (error) {
+    return res.status(500).json({ message: error.message });
+  }
+};
+
 const IsUserExist=async(userID)=>await getAllUsersID()
 .then((value) =>{
 console.log(value);
@@ -125,5 +175,11 @@ const getUserByID = async (req, res) => {
 
 
 
-module.exports={creatNewUser,deleteUserByID,getUserByID,isUserExist}
+module.exports={
+  creatNewUser,
+  deleteUserByID,
+  getUserByID,
+  isUserExist,
+  updateUserByID
+}
 // exports to UserRouts("../routs/UserRoute");
