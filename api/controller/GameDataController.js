@@ -12,7 +12,7 @@ const GameListModule = require('../modules/GameData');
 //   // console.log(element);
 // }
 
-const getAllGames =async(req, res) => {
+const getAllGamesName =async(req, res) => {
   const GameList=[]
   const Games=GameListModule.find().then((games) => {
         games.forEach((g)=>{
@@ -44,4 +44,4 @@ const getGameByName=async(req, res) => {
 }
 
 
-module.exports={getAllGames,getGameByName}
+module.exports={getAllGamesName,getGameByName}
