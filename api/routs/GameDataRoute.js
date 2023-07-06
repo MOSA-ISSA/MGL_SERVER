@@ -3,6 +3,7 @@ const GameDataController = require("../controller/GameDataController");
 const GameDataRouter = express.Router();
 
 GameDataRouter.get("/getAllGamesName",GameDataController.getAllGamesName)
-GameDataRouter.get("/getGameByName",GameDataController.getGameByName)
+GameDataRouter.get("/getAllGamesData",GameDataController.getAllGamesData)
+GameDataRouter.post("/getGameByName",GameDataController.getGameByName)
 
 module.exports = GameDataRouter;

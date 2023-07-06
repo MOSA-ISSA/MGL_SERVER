@@ -14,7 +14,7 @@ const GameListModule = require('../modules/GameData');
 
 const getAllGamesName =async(req, res) => {
   const GameList=[]
-  const Games=GameListModule.find().then((games) => {
+  GameListModule.find().then((games) => {
         games.forEach((g)=>{
           // console.log(g.GameData.name)
           GameList.push(g.GameData.name)
@@ -28,20 +28,36 @@ const getAllGamesName =async(req, res) => {
     // await console.log(Games);
 }
 
+const getAllGamesData =async(req, res) => {
+  const GameList=[]
+  GameListModule.find().then((games) => {
+        games.forEach((g)=>{
+          // console.log(g.GameData.name)
+          GameList.push(g.GameData)
+        })
+        res.status(200).json({
+          message: "done",
+          games:[...GameList],
+        });
+        return([...GameList])
+    })
+}
+
 const getGameByName=async(req, res) => {
-  const gameName=req.body.name
-  GameListModule.findOne({ name: 'BioShock' }).then((user) => {
-    if (user) {
-      res.status(200).json(user);
+  const gameName=req.body.gameName
+  GameListModule.findOne({ 'GameData.name': gameName }) // Replace `gameName` with the actual name you want to search for
+  .then((gameData) => {
+    if (gameData) {
+      res.status(200).json(gameData);
     } else {
-      res.status(404).json({ message: 'User not found' });
+      res.status(404).json({ message: 'gameData not found' });
     }
   })
   .catch((error) => {
-    console.error('Error retrieving user:', error);
+    console.error('Error retrieving gameData:', error);
     res.status(500).json({ message: 'Internal server error' });
-  })
+  });
 }
 
 
-module.exports={getAllGamesName,getGameByName}
+module.exports={getAllGamesName,getGameByName,getAllGamesData}
