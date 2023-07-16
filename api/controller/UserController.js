@@ -45,7 +45,7 @@ const updateUserByID = async (req, res) => {
     let validation = uservalidation(updatedUserData);
     // console.log(validation);
     if (validation === 'Valid') {
-      const canUpdate= await IsUserExist(req.body.userID,).then((v)=>!v)
+      const canUpdate= await IsUserExist(updatedUserData.ID).then((v)=>!v)
       // console.log(canUpdate);
         if (canUpdate||userID===updatedUserData.ID) {
           const updatedUser = await UserModule.updateOne(
