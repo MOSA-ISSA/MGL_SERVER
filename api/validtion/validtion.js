@@ -58,4 +58,21 @@ const passwordValidtion=(password)=>{
     return"Valid"
 }
 
-module.exports={validtion}
+const LinkValidtion=(imageLink)=>{
+    const urlRegex = /^(https?:\/\/)?[\w.-]+\.[a-z]{2,}(\/.*)?$/i;
+    return urlRegex.test(imageLink);
+}
+
+const arrayLinkValidtion=(imagesLink)=>{
+    if (Array.isArray(imagesLink)) {
+        return imagesLink.every((img) => LinkValidtion(img));
+    }
+    return false;
+}
+
+
+module.exports={
+    validtion,
+    LinkValidtion,
+    arrayLinkValidtion,
+}
