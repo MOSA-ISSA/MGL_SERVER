@@ -15,7 +15,10 @@ mongoose.connection.on("connected", () => {
 //  http://localhost:2999 //
 
 
-
+app.use((req, res, next) => {
+  res.setHeader('Access-Control-Allow-Origin', '*');
+  next();
+});
 
 app.get("/app", (req, res) => {
     res.status(200).json({

@@ -9,14 +9,6 @@ const platformsAndStores = new mongoose.Schema({
     url:{type: String}
 });
 
-const PublisherSchema = new mongoose.Schema({
-    id: { type: Number, required: true },
-    name: { type: String, required: true },
-    slug: { type: String, required: true },
-    games_count: { type: Number },
-    image_background: { type: String },
-});
-
 
 // Define the main GameDataSchema
 const GameDataSchema = new mongoose.Schema({
@@ -27,10 +19,6 @@ const GameDataSchema = new mongoose.Schema({
     description: { type: String, required: true },
     metacritic: { type: Number, required: true },
     game_series_count: { type: Number },
-    developers: {type: String,},// choices from all developers if its not Add,
-    genres: {type: String,},// choices from all genres if its not Add
-    tags: {type: String,},// choices from all tags if its not Add,
-    publishers: {type: String,},// choices from all publishers if its not Add,,
     released: {
         type: Date,
         required: true,
@@ -82,9 +70,11 @@ const GameDataSchema = new mongoose.Schema({
             message: 'Invalid ESRB rating. Must be one of: Everyone, Everyone 10+, Teen, Mature, Adults Only.',
         },
     },//----------------------------------------------------------------------
-    platformsAndStores: {
-        type: [platformsAndStores], 
-    },//=====================================================================
+    platformsAndStores: {type: String,},// choices from all platformsAndStores if its not err,
+    developers: {type: String,},// choices from all developers if its not Add,
+    genres: {type: String,},// choices from all genres if its not Add
+    tags: {type: String,},// choices from all tags if its not Add,
+    publishers: {type: String,},// choices from all publishers if its not Add,,
 });
 
 const GameModule = mongoose.model('GameData', GameDataSchema);
