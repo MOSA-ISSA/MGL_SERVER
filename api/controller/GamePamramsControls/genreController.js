@@ -65,19 +65,3 @@ const getGenreByName =async(req)=>{
 // }
 
 module.exports={getGenreByName}
-
-
-
-const cars = ["Tesla", "BMW", "Honda", "Kia" ]
-var carName =cars.find((val)=>val=="c")
-console.log(carName);
-
-cars.forEach((car,i)=>
-console.log("car",i,car)
-)
-
-console.log("jamal birh is 1998/11/16");
-
-const array=[10,20,30,50,90,70]
-var last = array.pop()
-console.log(last);
