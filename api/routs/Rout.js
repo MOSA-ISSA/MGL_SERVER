@@ -1,15 +1,14 @@
 const { models } = require("mongoose");
-const UserRouter = require("./UserRoute");
+const UserRouter = require("../Users/rout/UserRoute");
 const GameDataRouter = require("./GameDataRoute");
 const localRout = require("./localRout");
 const GamesDataRouter = require("./GamesDataRoute");
-const GenreRout = require("./GamePamramsRout/genreRout");
-
+const GenreRout = require("../Games/#params/ganre/rout/genreRout");
 
 
 const Routs =  [
     UserRouter,
-    GameDataRouter,
+    // GameDataRouter,
     localRout,
     GenreRout,
     // GamesDataRouter,
