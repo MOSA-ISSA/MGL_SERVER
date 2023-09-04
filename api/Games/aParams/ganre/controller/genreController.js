@@ -24,15 +24,16 @@ const AddGenreData = async (req, res) => {
     const canAddGames= await getGenreByName(req).then((v)=>!v.length)
     // console.log(canAddGames,"canAddGames");
     if (canAddGames) {
+        var castName=req.body.name.toLowerCase().replace(/\s+/g, ' ')
         genre.create({
         id: (await genre.find({})).length,// auto 
-        name: req.body.name,
+        name: castName,
         // slug: req.body.slug,
         image_background: req.body.image_background||'',
       }).then((response) => {
         res.status(200).json({
           message: "done",
-          ...req.body
+          castName
         });
       }).catch(e=>{
         res.status(500).json({message:e.message})
@@ -66,4 +67,4 @@ const getAllGenreNamesAndImage =async(req,res)=>{
 
 module.exports={getGenreByName,AddGenreData,getAllGenreNamesAndImage}
 // to 
-// require ("../../routs/GamePamramsRout/genreRout.js")
+// require ("../rout/genreRout.js")

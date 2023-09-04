@@ -10,12 +10,6 @@ const GenreSchema = new mongoose.Schema({
     image_background: { type: String },// what if I Can connect To AI and Acording to name will Creat Image and Image will change evrey time
 });
 
-// GenreSchema.pre('validate', function (next) {
-//     if (!this.slug && this.name) {
-//       this.slug = this.name.toLowerCase().replace(/\s+/g, '-');
-//     }
-//     next();
-// });
   
 
 const genreModule = mongoose.model('Genre', GenreSchema);
