@@ -3,7 +3,7 @@ const genre = require('../modules/GenreModules');//genre
 
 const getGenreByName =async(req,res)=>{
   console.log(req.body);
-  var ChangeToSlug=req.body.name.toLowerCase().replace(/\s+/g, '-')
+  var ChangeToSlug=req.body.name.trim().toLowerCase().replace(/\s+/g, '-')
 
   return genre.find({slug:ChangeToSlug}||{})
   .then((g) => {
@@ -24,7 +24,7 @@ const AddGenreData = async (req, res) => {
     const canAddGames= await getGenreByName(req).then((v)=>!v.length)
     // console.log(canAddGames,"canAddGames");
     if (canAddGames) {
-        var castName=req.body.name.toLowerCase().replace(/\s+/g, ' ')
+        var castName=req.body.name.trim().toLowerCase().replace(/\s+/g, ' ')
         genre.create({
         id: (await genre.find({})).length,// auto 
         name: castName,

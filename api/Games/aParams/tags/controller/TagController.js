@@ -3,7 +3,7 @@ const Tag = require('../modules/TagModule.js');//Tag
 
 const getTagByName =async(req,res)=>{
   console.log(req.body);
-  var ChangeToSlug=req.body.name.toLowerCase().replace(/\s+/g, '-')
+  var ChangeToSlug=req.body.name.trim().toLowerCase().replace(/\s+/g, '-')
 
   return Tag.find({slug:ChangeToSlug}||{})
   .then((g) => {
@@ -24,7 +24,7 @@ const AddTagData = async (req, res) => {
     const canAddGames= await getTagByName(req).then((v)=>!v.length)
     // console.log(canAddGames,"canAddGames");
     if (canAddGames) {
-        var castName=req.body.name.toLowerCase().replace(/\s+/g, ' ')
+        var castName=req.body.name.trim().toLowerCase().replace(/\s+/g, ' ')
         Tag.create({
         id: (await Tag.find({})).length,// auto 
         name: castName,

@@ -1,14 +1,6 @@
 const mongoose = require('mongoose');
 const {LinkValidtion, arrayLinkValidtion} = require('../validtion/validtion');
 
-// Define sub-schemas for nested objects
-const platformsAndStores = new mongoose.Schema({
-    id: { type: Number, required: true },
-    name: { type: String, required: true },
-    image_background: { type: String },
-    url:{type: String}
-});
-
 
 // Define the main GameDataSchema
 const GameDataSchema = new mongoose.Schema({
