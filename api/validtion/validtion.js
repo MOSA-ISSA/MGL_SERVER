@@ -1,3 +1,5 @@
+const { getModuleByName, getAllOf } = require("../fetchApi")
+
 const validtion=(user)=>{
     let validtions=
     {
@@ -70,9 +72,41 @@ const arrayLinkValidtion=(imagesLink)=>{
     return false;
 }
 
+const CheckModuleValidation=async (url,name)=>{
+    const v = await getModuleByName(url,{ name: name})
+    var ValidtionName = v.data.length
+    if (ValidtionName) {
+        return true
+    } else {
+        // creat one
+        return false
+    }
+}
+
+const arrayCheckModuleValidation = async (url,names) => {
+    if (Array.isArray(names)) {
+      const validationResults = await Promise.all(
+        names.map(async (name) => await CheckModuleValidation(url,name))
+      );
+      return validationResults.every((result) => result);
+    }
+    return false;
+};
+
+const theValidValues=async(url)=>{
+    // console.log("*********");
+    return await (
+        getAllOf(url)
+        .then(v=>v.data.map((item)=>item.name))
+    )
+}
+// theValidValue('getAllTagNames','TagName').then(v=>{console.log("this",v)})
 
 module.exports={
     validtion,
     LinkValidtion,
     arrayLinkValidtion,
+    CheckModuleValidation,
+    arrayCheckModuleValidation,
+    theValidValues,
 }

@@ -2,8 +2,8 @@ const express = require("express");
 const publishersController = require("../controller/publishersController");
 const publishersRout = express.Router();
 
-publishersRout.post("/getpuPlishersByName",publishersController.getPublishersByName)
-publishersRout.post("/AddpuPlishersData",publishersController.AddPublishersData)
+publishersRout.post("/getPublishersByName",publishersController.getPublishersByName)
+publishersRout.post("/AddPlishersData",publishersController.AddPublishersData)
 publishersRout.get("/getAllPublishers",publishersController.getAllPublishers)
 
 module.exports = publishersRout;
