@@ -1,6 +1,7 @@
 const mongoose = require('mongoose');
 const Platforms = require('../modules/platformsModule');
-const { getModulesByName, AddModulesData, getAllmodule } = require('../../controll');
+const { getModulesByName, AddModulesData, getAllmodule } = require('../../../../controller/localControler');
+
 
 const getPlatformsByName =async(req,res)=>{
   return getModulesByName(Platforms,req,res)

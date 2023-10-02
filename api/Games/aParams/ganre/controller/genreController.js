@@ -1,6 +1,7 @@
 const mongoose = require('mongoose');
 const Genre = require('../modules/GenreModules');//genre
-const { getModulesByName, AddModulesData, getAllmodule } = require('../../controll');
+const { getModulesByName, AddModulesData, getAllmodule } = require('../../../../controller/localControler');
+
 
 const getGenreByName =async(req,res)=>{
   return getModulesByName(Genre,req,res)

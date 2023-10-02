@@ -1,4 +1,7 @@
 const mongoose = require('mongoose');
+const slug = require('mongoose-slug-generator');
+
+mongoose.plugin(slug);
 
 const userSchema = new mongoose.Schema({
   ID:{
@@ -6,11 +9,12 @@ const userSchema = new mongoose.Schema({
     required:true,
     minLength:4,
     maxLength:20,
-    // validate:{
-    //   validator: value =>,
-    //   message: props => `${props.value} is not valid`
-    // },
+    validate:{
+      validator: value => !value.includes('  '),
+      message: props => `${props.value} is not valid`
+    },
   },
+  slug: { type: String, slug: "ID" },
   mail:{
     type:String,
     required:true,

@@ -1,6 +1,6 @@
 const mongoose = require('mongoose');
 const Developer = require('../modules/DeveloperModules');
-const { getModulesByName, AddModulesData, getAllmodule } = require('../../controll');
+const { getModulesByName, AddModulesData, getAllmodule } = require('../../../../controller/localControler');
 
 const getDeveloperByName =async(req,res)=>{
   return getModulesByName(Developer,req,res)

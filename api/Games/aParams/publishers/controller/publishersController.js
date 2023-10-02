@@ -1,6 +1,7 @@
 const mongoose = require('mongoose');
 const Publishers = require('../modules/publishersModules');
-const { getModulesByName, AddModulesData, getAllmodule } = require('../../controll');
+const { getModulesByName, AddModulesData, getAllmodule } = require('../../../../controller/localControler');
+
 
 const getPublishersByName =async(req,res)=>{
   return getModulesByName(Publishers,req,res)

@@ -3,21 +3,11 @@ const UserModule = require('../modules/users');
 const { json } = require('express');
 const { validtion } = require('../../validtion/validtion');
 const { images } = require('../../../src/asets/images/exportImages');
+const { getAllmodule} = require('../../controller/localControler');
 const User=UserModule;
 
-const getAllUsersID =async()=>{
-    const usersID=User.find({})
-    .then((users) => {
-      // console.log('All users:', users);
-      let usersID=[]
-      users.every((user)=>usersID.push(user.ID))
-      // console.log(usersID);
-      return usersID
-    })
-    .catch((e) => {
-      console.error('Error retrieving users:', e.message);
-    });
-    return usersID
+const getAllUsersID =async(req,res)=>{
+  return getAllmodule(User,res)
 }
 
 const uservalidation=(user)=>{
@@ -39,6 +29,29 @@ const uservalidation=(user)=>{
 //   }
 // ));
 
+const getUserByID = async (req, res) => {
+  // var ChangeToSlug=req?.body?.name?.trim().toLowerCase().replace(/\s+/g, '-')
+  // to search by Slug ****||{slug:ChangeToSlug}
+    return User.find({ID:req.body?.ID}||{})
+    .then((item) => {
+        // console.log('user', item);
+        res?.status(200).json({data:item})
+        return item
+    })
+    .catch((e) => {
+        console.error('Error retrieving Data:', e.message);
+        return e.message
+    });
+};
+
+const isUserExist=async(req, res)=>{
+  return getUserByID(req, null)
+  .then((v)=>{
+    res?.status(200).json({ message: !!v.length});
+    return !!v.length
+  })
+}
+
 const updateUserByID = async (req, res) => {
   try {
     const updatedUserData = req.body.updatedUser;
@@ -46,7 +59,7 @@ const updateUserByID = async (req, res) => {
     let validation = uservalidation(updatedUserData);
     // console.log(validation);
     if (validation === 'Valid') {
-      const canUpdate= await IsUserExist(updatedUserData.ID).then((v)=>!v)
+      const canUpdate= await isUserExist({body:{ID:updatedUserData.ID}}).then((v)=>!v)
       // console.log(canUpdate);
         if (canUpdate||userID===updatedUserData.ID) {
           const updatedUser = await UserModule.updateOne(
@@ -70,77 +83,33 @@ const updateUserByID = async (req, res) => {
   }
 };
 
-const IsUserExist=async(userID)=>await getAllUsersID()
-.then((value) =>{
-console.log(value);
-// console.log(value.includes(userID));
-return value.includes(userID)
-})
-// IsUserExist("mosa").then(v=>{console.log(v);})
-
-
-
-const isUserExist=async(req, res)=>{
-  await getAllUsersID()
-  .then((value) =>{
-    // console.log(value);
-    // console.log(value.includes(req.body.ID)));
-    res.status(200).json({ message: value.includes(req.body.ID) });
-  })
-}
-
 //app.post("/creatNewUser", 
 const creatNewUser = async (req, res) => {
-    const canCreat= await IsUserExist(req.body.ID,).then((v)=>!v)
+  const canCreat= await getUserByID(req, null).then((v)=>!v.length)
     console.log(canCreat);
-    if (canCreat) {
-      UserModule.create({
-        ID: req.body.ID,
-        mail: req.body.mail,
-        password: req.body.password,
-        name: req.body.name,
-        image: images.ID,
-        imageBackground: images.backgraund,
-        // createdAt: req.body.createdAt,
-      }).then((response) => {
-        res.status(200).json({
-          message: "done",
-          ...req.body
-        });
-      }).catch(e=>{
-        res.status(500).json({message:e.message})
-        console.log(e.message);
+  if (canCreat) {
+    UserModule.create({
+      ID: req.body.ID,
+      mail: req.body.mail,
+      password: req.body.password,
+      name: req.body.name,
+      image: images.ID,
+      imageBackground: images.backgraund,
+      // createdAt: req.body.createdAt,
+    }).then((response) => {
+      res.status(200).json({
+        message: "done",
+        ...req.body
       });
-    }else{
-      res.status(500).json({message:"User Exist"})
-    }
+    }).catch(e=>{
+      res.status(500).json({message:e.message})
+      console.log(e.message);
+    });
+  }else{
+    res.status(500).json({message:"User Exist"})
+  }
 }
 
-// const creatNewUser = async (req, res) => {
-//   const canCreat= await IsUserExist(req.body.ID,).then((v)=>!v)
-//   console.log(canCreat);
-//   if (canCreat) {
-//     UserModule.create({
-//       ID: req.body.ID,
-//       mail: req.body.mail,
-//       password: req.body.password,
-//       name: req.body.name,
-//       // createdAt: req.body.createdAt,
-//     }).then((response) => {
-//       res.status(200).json({
-//         message: "done",
-//         ...req.body
-//       });
-//     }).catch(e=>{
-//       res.status(500).json({message:e.message})
-//       console.log(e.message);
-//     });
-//   }else{
-//     res.status(500).json({message:"User Exist"})
-//   }
-// }
-
-// app.delete("/deleteUserByID",
 const deleteUserByID =async(req, res)=>{
     // req.ID
     let ID = req.body.ID
@@ -157,33 +126,15 @@ const deleteUserByID =async(req, res)=>{
       }
 }
 
-const getUserByID = async (req, res) => {
-  const ID = req.body.ID;
-  console.log(req.body.ID);
-
-  try {
-    const user = await User.findOne({ ID });
-    if (!user) {
-      console.log("User not found");
-      return res.status(404).json({ message: "User not found" });
-    }
-
-    console.log("User found:", user);
-    res.status(200).json({ message: user });
-  } catch (error) {
-    console.error("Error:", error);
-    res.status(500).json({ message: error });
-  }
-};
-
-
-
+// isUserExist({body:{ID:"mosa"}}).then((v)=>{console.log(v);})
+// getUserByID({body:{ID:"mosa"}},null).then((v)=>{console.log(v.length);})
 
 module.exports={
   creatNewUser,
   deleteUserByID,
   getUserByID,
   isUserExist,
-  updateUserByID
+  updateUserByID,
+  getAllUsersID,
 }
 // exports to UserRouts("../routs/UserRoute");

@@ -1,6 +1,7 @@
 const mongoose = require('mongoose');
 const Tag = require('../modules/TagModule.js');//Tag
-const { getModulesByName, AddModulesData, getAllmodule } = require('../../controll');
+const { getModulesByName, AddModulesData, getAllmodule } = require('../../../../controller/localControler.js');
+
 
 const getTagByName =async(req,res)=>{
   return getModulesByName(Tag,req,res)

@@ -1,3 +1,4 @@
+const { AddModulesData } = require("../controller/localControler")
 const { getModuleByName, getAllOf } = require("../fetchApi")
 
 const validtion=(user)=>{
@@ -72,21 +73,29 @@ const arrayLinkValidtion=(imagesLink)=>{
     return false;
 }
 
-const CheckModuleValidation=async (url,name)=>{
+const CheckModuleValidation=async (url,name,module)=>{
+    // console.log(name);
     const v = await getModuleByName(url,{ name: name})
     var ValidtionName = v.data.length
     if (ValidtionName) {
         return true
     } else {
-        // creat one
-        return false
+        await AddModulesData(module,{
+            body:{
+              name:name,
+            }
+          } 
+        )
+        // if creat true
+        return CheckModuleValidation(url,name)
     }
 }
 
-const arrayCheckModuleValidation = async (url,names) => {
+const arrayCheckModuleValidation = async (url,names,module) => {
+    console.log(names);
     if (Array.isArray(names)) {
       const validationResults = await Promise.all(
-        names.map(async (name) => await CheckModuleValidation(url,name))
+        names.map(async (name) => await CheckModuleValidation(url,name,module))
       );
       return validationResults.every((result) => result);
     }

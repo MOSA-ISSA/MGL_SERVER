@@ -2,7 +2,7 @@ const express = require("express");
 const mongoose = require("mongoose");
 const GameListModule = require('./api/modules/GameData');
 const Routs = require("./api/routs/Rout");
-const { CheckPlatformValidation, arrayCheckPlatformValidation, theValidValue, theValidValues } = require("./api/validtion/validtion");
+const { CheckPlatformValidation, arrayCheckPlatformValidation, theValidValue, theValidValues, CheckModuleValidation } = require("./api/validtion/validtion");
 const { getAllOf } = require("./api/fetchApi");
 
 const app = express();
@@ -53,21 +53,10 @@ app.post("/test", (req, res) => {
   }
 })
 
-// console.log(A.results[0].name);
-// console.log(A.results.length);
 
-// const gameList =new GameListModule({GameData:"game"})
-// gameList.save().then(()=>{console.log('saved');})
-
-// for (let i = 0; i < A.results.length; i++) {
-//   const gameList =new GameListModule({GameData:A.results[i]})
-//   gameList.save().then(()=>{console.log('saved');})
-//   // const element = A.results[i].name;
-//   // console.log(element);
-// }
 
 console.log('wait');
-theValidValues('getAllTagNames').then(v=>(console.log(v)))
+// CheckModuleValidation('getDeveloperByName','test').then(v=>(console.log(v)))
 app.use("/", Routs);
 
 module.exports=app;

@@ -7,6 +7,7 @@ UserRouter.post("/creatNewUser",UserController.creatNewUser)
 UserRouter.post("/getUserByID",UserController.getUserByID)
 UserRouter.post("/isUserExist",UserController.isUserExist)
 UserRouter.put("/updateUserByID",UserController.updateUserByID)
+UserRouter.get("/getAllUsersID",UserController.getAllUsersID)
 
 
 module.exports = UserRouter;
